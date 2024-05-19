@@ -31,6 +31,11 @@ export const expensesRouter = new Hono()
     }
     return c.json({ expense });
   })
+  .get("/total-spent", async (c) => {
+    const total = fakeExpenses.reduce((acc, e) => acc + e.amount, 0);
+    return c.json({ total });
+  })
+
   .delete("/:id{[0-9]+}", async (c) => {
     const id = Number.parseInt(c.req.param("id"));
     const expense = fakeExpenses.find((e) => e.id === id);
